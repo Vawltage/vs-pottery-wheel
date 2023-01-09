@@ -1,0 +1,11 @@
+{
+  "type": "code",
+  "modid": "claywheel",
+  "name": "Simple Pottery Wheel",
+  "authors": ["Voltage"],
+  "description": "Adds a pottery wheel for easier clay forming.",
+  "version": "1.0.0",
+  "dependencies": {
+    "game": "1.17.9"
+  }
+}
