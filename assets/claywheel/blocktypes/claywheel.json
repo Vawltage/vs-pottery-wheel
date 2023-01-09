@@ -1,0 +1,40 @@
+{
+  "code": "claywheel",
+  "class": "ClayWheel",
+  "entityClass": "ClayWheelEntity",
+  "entityBehaviors": [ { "name": "MPConsumer" } ],
+  "creativeinventory": {
+    "general": [ "*" ],
+    "mechanics": [ "*" ]
+  },
+  "drawtype": "json",
+  "shape": { "base": "block/claywheel" },
+  "selectionBox": {
+    "x1": 0.125,
+    "y1": 0,
+    "z1": 0.125,
+    "x2": 0.875,
+    "y2": 1,
+    "z2": 0.875
+  },
+  "collisionBox": {
+    "x1": 0.125,
+    "y1": 0,
+    "z1": 0.125,
+    "x2": 0.875,
+    "y2": 1,
+    "z2": 0.875
+  },
+  "sidesolid": {
+    "all": false
+  },
+  "sideopaque": {
+    "all": false
+  },
+  "resistance":  1,
+  "sounds": {
+    "place": "game:block/ceramicplace",
+    "break": "game:block/rock-break-pickaxe",
+    "walk": "game:walk/stone2"
+  }
+}
