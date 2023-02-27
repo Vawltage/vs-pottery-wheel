@@ -1,8 +1,7 @@
-/.ignore
-/.gitignore
-/pottery-wheel.csproj
-/PotteryWheel.code-workspace
-/readme.txt
+.gitignore
+pottery-wheel.csproj
+PotteryWheel.code-workspace
+readme.txt
 /bin
 /obj
 /.vscode
