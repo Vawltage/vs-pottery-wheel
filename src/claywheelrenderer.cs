@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vintagestory.API.Common;
+﻿using Vintagestory.API.Common;
 using Vintagestory.GameContent.Mechanics;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using Vintagestory.API.Util;
-using Vintagestory.API.Datastructures;
 
 namespace claywheel.src
 {
@@ -67,7 +61,8 @@ namespace claywheel.src
             rpi.GlToggleBlend(true);
 
             IStandardShaderProgram prog = rpi.PreparedStandardShader(pos.X, pos.Y, pos.Z);
-            prog.Tex2D = api.BlockTextureAtlas.AtlasTextureIds[0];
+            //prog.Tex2D = api.BlockTextureAtlas.AtlasTextureIds[0];
+            prog.Tex2D = api.BlockTextureAtlas.AtlasTextures[0].TextureId;
 
 
             prog.ModelMatrix = BaseModelMat

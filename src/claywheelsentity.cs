@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.GameContent;
 using Vintagestory.GameContent.Mechanics;
@@ -13,7 +12,6 @@ using Vintagestory.API.Util;
 using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.Net;
 
 namespace claywheel.src
 {
@@ -65,7 +63,7 @@ namespace claywheel.src
 
             if (spinSound == null && api.Side == EnumAppSide.Client)
             {
-                spinSound = ((IClientWorldAccessor)api.World).LoadSound(new SoundParams() 
+                spinSound = ((IClientWorldAccessor)api.World).LoadSound(new SoundParams()
                 {
                     Location = new AssetLocation("claywheel:sounds/wood-wheel.ogg"),
                     ShouldLoop = true,
@@ -132,7 +130,7 @@ namespace claywheel.src
                         renderer.ShouldRotateAutomated = false;
                     }
                 };
-             }
+            }
         }
 
         private void Every100ms(float dt)
@@ -201,7 +199,7 @@ namespace claywheel.src
                 }
             }
 
-            
+
             RegenWorkItemMesh();
             MarkDirty();
         }
@@ -622,7 +620,7 @@ namespace claywheel.src
                     }
                 }
 
-                
+
                 AddClay(voxels);
                 //too spammy will look for a better solution later
                 //Api.World.PlaySoundAt(clayFormSound, Pos.X, Pos.Y, Pos.Z, null, true, 8);
@@ -661,17 +659,19 @@ namespace claywheel.src
             ;
 
             ICoreClientAPI capi = Api as ICoreClientAPI;
-            
+
             dlg = new GuiDialogBlockEntityRecipeSelector(
                 Lang.Get("Select recipe"),
                 stacks.ToArray(),
-                (selectedIndex) => {
+                (selectedIndex) =>
+                {
                     capi.Logger.VerboseDebug("Select clay from recipe {0}, have {1} recipes.", selectedIndex, recipes.Count);
 
                     selectedRecipeId = recipes[selectedIndex].RecipeId;
                     capi.Network.SendBlockEntityPacket(pos.X, pos.Y, pos.Z, (int)EnumClayWheelPacket.SelectRecipe, SerializerUtil.Serialize(recipes[selectedIndex].RecipeId));
                 },
-                () => {
+                () =>
+                {
                     capi.Network.SendBlockEntityPacket(pos.X, pos.Y, pos.Z, (int)EnumClayWheelPacket.CancelSelect);
                 },
                 pos,

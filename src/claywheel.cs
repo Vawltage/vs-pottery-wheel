@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.GameContent.Mechanics;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using Vintagestory.API.Util;
-using Vintagestory.API.Datastructures;
 
 namespace claywheel.src
 {
@@ -74,7 +69,7 @@ namespace claywheel.src
                                     if (becw.WorkItemStack != null && becw.WorkItemStack.Collectible.LastCodePart() == val.Collectible.LastCodePart())
                                     {
                                         stacks.Add(val);
-                                    }  
+                                    }
                                 }
                             }
                             return stacks.ToArray();
@@ -100,7 +95,7 @@ namespace claywheel.src
                 };
             }
             );
-            
+
         }
 
         public override bool TryPlaceBlock(IWorldAccessor world, IPlayer byPlayer, ItemStack itemstack, BlockSelection blockSel, ref string failureCode)
@@ -131,7 +126,7 @@ namespace claywheel.src
                         return true;
                     }
                     else return false;
-                } 
+                }
                 string clayOnWheelType = be.WorkItemStack != null ? be.WorkItemStack.Collectible.Code.ToString() : null;
                 CollectibleObject heldItem = slot.Itemstack.Collectible;
                 if (byPlayer.Entity.Controls.ShiftKey && be.SelectedRecipe == null && heldItem.Code.FirstCodePart() == "clay")

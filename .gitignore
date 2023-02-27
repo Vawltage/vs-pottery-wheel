@@ -1,3 +1,8 @@
 /.ignore
-/claywheel.dll
-/claywheel.csproj
+/.gitignore
+/pottery-wheel.csproj
+/PotteryWheel.code-workspace
+/readme.txt
+/bin
+/obj
+/.vscode
