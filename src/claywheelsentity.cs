@@ -19,15 +19,32 @@ namespace claywheel.src
     {
         ItemStack workItemStack;
         int selectedRecipeId = -1;
-        int clayAddedPerUse = 1;
+        bool automated = false;
+        bool canAddClay = true;
+        float poweredMult
+        {
+            get
+            {
+                if (automated)
+                {
+                    return ClayWheels.config.poweredMultiplier;
+                }
+                else
+                {
+                    return 1.0f;
+                }
+            }
+        }
+        int clayAddedPerUse
+        {
+            get { return (int)(ClayWheels.config.voxelsPerUse * poweredMult); }
+        }
         public int AvailableVoxels;
         public bool[,,] Voxels = new bool[16, 16, 16];
 
         GuiDialog dlg;
         BEBehaviorMPConsumer mpc;
         ClayWheelRenderer renderer;
-        bool automated = false;
-        bool canAddClay = true;
         public bool playerSpinning = false;
 
         private AssetLocation shapeAL = AssetLocation.Create("shapes/block/claywheel.json", "claywheel");
@@ -110,7 +127,6 @@ namespace claywheel.src
                 mpc.OnConnected = () =>
                 {
                     automated = true;
-                    clayAddedPerUse = 2;
 
                     if (renderer != null)
                     {
@@ -122,7 +138,6 @@ namespace claywheel.src
                 mpc.OnDisconnected = () =>
                 {
                     automated = false;
-                    clayAddedPerUse = 1;
 
                     if (renderer != null)
                     {
