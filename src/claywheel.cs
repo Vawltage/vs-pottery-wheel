@@ -80,7 +80,6 @@ namespace claywheel.src
                         ActionLangCode = "claywheel:blockhelp-claywheel-retrieveclay",
                         HotKeyCode = "shift",
                         MouseButton = EnumMouseButton.Right,
-                        Itemstacks = clayStackList.ToArray(),
                         RequireFreeHand = true,
                         GetMatchingStacks = (wi, bs, es) =>
                         {
