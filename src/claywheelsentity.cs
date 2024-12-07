@@ -584,7 +584,7 @@ namespace claywheel.src
             }
 
             ((ICoreClientAPI)Api).Network.SendBlockEntityPacket(
-                Pos.X, Pos.Y, Pos.Z,
+                Pos,
                 (int)EnumClayWheelPacket.AddClay,
                 data
             );
@@ -618,7 +618,7 @@ namespace claywheel.src
                 Api.World.PlaySoundAt(clayFormSound, Pos.X, Pos.Y, Pos.Z, null, true, 8);
                 // Tell server to save this chunk to disk again
                 MarkDirty();
-                Api.World.BlockAccessor.GetChunkAtBlockPos(Pos.X, Pos.Y, Pos.Z).MarkModified();
+                Api.World.BlockAccessor.GetChunkAtBlockPos(Pos).MarkModified();
             }
 
             if (packetid == (int)EnumClayWheelPacket.AddClay)
@@ -642,7 +642,7 @@ namespace claywheel.src
                 CheckIfFinished(player);
                 RegenWorkItemMesh();
 
-                ((ICoreServerAPI)Api).Network.SendBlockEntityPacket((IServerPlayer)player, Pos.X, Pos.Y, Pos.Z, (int)EnumClayWheelPacket.ClayAdded);
+                ((ICoreServerAPI)Api).Network.SendBlockEntityPacket((IServerPlayer)player, Pos, (int)EnumClayWheelPacket.ClayAdded);
             }
         }
 
@@ -683,11 +683,11 @@ namespace claywheel.src
                     capi.Logger.VerboseDebug("Select clay from recipe {0}, have {1} recipes.", selectedIndex, recipes.Count);
 
                     selectedRecipeId = recipes[selectedIndex].RecipeId;
-                    capi.Network.SendBlockEntityPacket(pos.X, pos.Y, pos.Z, (int)EnumClayWheelPacket.SelectRecipe, SerializerUtil.Serialize(recipes[selectedIndex].RecipeId));
+                    capi.Network.SendBlockEntityPacket(pos, (int)EnumClayWheelPacket.SelectRecipe, SerializerUtil.Serialize(recipes[selectedIndex].RecipeId));
                 },
                 () =>
                 {
-                    capi.Network.SendBlockEntityPacket(pos.X, pos.Y, pos.Z, (int)EnumClayWheelPacket.CancelSelect);
+                    capi.Network.SendBlockEntityPacket(pos, (int)EnumClayWheelPacket.CancelSelect);
                 },
                 pos,
                 Api as ICoreClientAPI
@@ -714,7 +714,7 @@ namespace claywheel.src
             }
         }
 
-        public override void OnLoadCollectibleMappings(IWorldAccessor worldForResolve, Dictionary<int, AssetLocation> oldBlockIdMapping, Dictionary<int, AssetLocation> oldItemIdMapping, int schematicSeed)
+        public override void OnLoadCollectibleMappings(IWorldAccessor worldForResolve, Dictionary<int, AssetLocation> oldBlockIdMapping, Dictionary<int, AssetLocation> oldItemIdMapping, int schematicSeed, bool resolveImports)
         {
             if (workItemStack != null && workItemStack.FixMapping(oldBlockIdMapping, oldItemIdMapping, worldForResolve) == false)
             {
