@@ -8,6 +8,6 @@
   "description": "Adds a pottery wheel for easier clay forming.",
   "version": "1.1.2",
   "dependencies": {
-    "game": "1.20.0-pre.13"
+    "game": "1.20.0-rc.1"
   }
 }
