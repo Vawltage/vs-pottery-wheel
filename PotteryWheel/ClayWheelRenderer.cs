@@ -3,8 +3,9 @@ using Vintagestory.GameContent.Mechanics;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using Vintagestory.API.Util;
+using System;
 
-namespace claywheel.src
+namespace SimplePotteryWheel
 {
     public class ClayWheelRenderer : IRenderer
     {
@@ -136,7 +137,8 @@ namespace claywheel.src
             string texname = api.World.GetItem(new AssetLocation("clayworkitem-" + workitem.Collectible.LastCodePart())).Code.ToShortString();
             TextureAtlasPosition tpos = api.BlockTextureAtlas.GetPosition(api.World.GetBlock(new AssetLocation("clayform")), texname);
             MeshData singleVoxelMesh = CubeMeshUtil.GetCubeOnlyScaleXyz(1 / 32f, 1 / 32f, new Vec3f(1 / 32f, 1 / 32f, 1 / 32f));
-            singleVoxelMesh.Rgba = new byte[6 * 4 * 4].Fill((byte)255);
+            singleVoxelMesh.Rgba = new byte[6 * 4 * 4];
+            Array.Fill(singleVoxelMesh.Rgba, (byte)255);
             CubeMeshUtil.SetXyzFacesAndPacketNormals(singleVoxelMesh);
 
             texId = tpos.atlasTextureId;

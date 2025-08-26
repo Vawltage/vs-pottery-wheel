@@ -5,9 +5,9 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using Vintagestory.API.Util;
 
-namespace claywheel.src
+namespace SimplePotteryWheel
 {
-    class ClayWheel : BlockMPBase
+    class ClayWheelBlock : BlockMPBase
     {
         WorldInteraction[] interactions;
 

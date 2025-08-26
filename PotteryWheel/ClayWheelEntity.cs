@@ -13,7 +13,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 using Vintagestory.API.Datastructures;
 
-namespace claywheel.src
+namespace SimplePotteryWheel
 {
     public class ClayWheelEntity : BlockEntity
     {
@@ -27,7 +27,7 @@ namespace claywheel.src
             {
                 if (automated)
                 {
-                    return ClayWheels.config.poweredMultiplier;
+                    return ClayWheelModSystem.config.poweredMultiplier;
                 }
                 else
                 {
@@ -37,7 +37,7 @@ namespace claywheel.src
         }
         int clayAddedPerUse
         {
-            get { return (int)(ClayWheels.config.voxelsPerUse * poweredMult); }
+            get { return (int)(ClayWheelModSystem.config.voxelsPerUse * poweredMult); }
         }
         public int AvailableVoxels;
         public bool[,,] Voxels = new bool[16, 16, 16];
