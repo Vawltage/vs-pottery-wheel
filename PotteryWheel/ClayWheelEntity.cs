@@ -86,7 +86,7 @@ namespace SimplePotteryWheel
                     ShouldLoop = true,
                     Position = Pos.ToVec3f().Add(0.5f, 0.5f, 0.5f),
                     DisposeOnFinish = false,
-                    Volume = 0.3f
+                    Volume = 0.4f
                 });
             }
 
@@ -157,7 +157,7 @@ namespace SimplePotteryWheel
                     spinSound.Start();
                 }
             }
-            else if (automated && mpc.TrueSpeed > 0f)
+            else if (automated && mpc.TrueSpeed > 0.1f)
             {
                 if (spinSound != null && !spinSound.IsPlaying)
                 {
