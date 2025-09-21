@@ -157,7 +157,7 @@ namespace SimplePotteryWheel
                     spinSound.Start();
                 }
             }
-            else if (automated && mpc.TrueSpeed > 0.1f)
+            else if (automated && mpc?.TrueSpeed > 0.1f)
             {
                 if (spinSound != null && !spinSound.IsPlaying)
                 {
@@ -197,6 +197,9 @@ namespace SimplePotteryWheel
             }
             else
             {
+                // don't add any clay when the wheel isn't spinning fast enough
+                if (automated && mpc?.TrueSpeed < 0.1f) return;
+
                 if (Api.Side == EnumAppSide.Client)
                 {
                     SendAddClayPacket(byPlayer, GetPositionsToAdd());
