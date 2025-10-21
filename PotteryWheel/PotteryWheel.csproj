@@ -19,6 +19,9 @@
       <HintPath>$(VINTAGE_STORY)/Mods/VSEssentials.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="protobuf-net">
+			<HintPath>$(VINTAGE_STORY)/Lib/protobuf-net.dll</HintPath>
+		</Reference>
   </ItemGroup>
 
 <ItemGroup>
