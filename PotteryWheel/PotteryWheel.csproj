@@ -21,6 +21,7 @@
     </Reference>
     <Reference Include="protobuf-net">
 			<HintPath>$(VINTAGE_STORY)/Lib/protobuf-net.dll</HintPath>
+      <Private>False</Private>
 		</Reference>
   </ItemGroup>
 
