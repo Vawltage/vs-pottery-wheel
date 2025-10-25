@@ -630,11 +630,17 @@ namespace SimplePotteryWheel
                 using (MemoryStream ms = new MemoryStream(data))
                 {
                     //each vec3i should be 12 bytes each
-                    int count = (int)ms.Length / 12;
                     BinaryReader reader = new BinaryReader(ms);
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < voxels.Length; i++)
                     {
-                        voxels.SetValue(new Vec3i(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()), i);
+                        try
+                        {
+                            voxels.SetValue(new Vec3i(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()), i);
+                        }
+                        catch (Exception e)
+                        {
+                            Api.Logger.Error(e);
+                        }
                     }
                 }
 
