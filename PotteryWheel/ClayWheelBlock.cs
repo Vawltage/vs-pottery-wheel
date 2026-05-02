@@ -103,7 +103,7 @@ namespace SimplePotteryWheel
 
             if (ok)
             {
-                bool poop = tryConnect(world, byPlayer, blockSel.Position, BlockFacing.DOWN);
+                tryConnect(world, byPlayer, blockSel.Position, BlockFacing.DOWN);
             }
 
             return ok;
@@ -196,7 +196,7 @@ namespace SimplePotteryWheel
 
         }
 
-        public override bool HasMechPowerConnectorAt(IWorldAccessor world, BlockPos pos, BlockFacing face)
+        public override bool HasMechPowerConnectorAt(IWorldAccessor world, BlockPos pos, BlockFacing face, BlockMPBase forBlock)
         {
             return face == BlockFacing.DOWN;
         }
