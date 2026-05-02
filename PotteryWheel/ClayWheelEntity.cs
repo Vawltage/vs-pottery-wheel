@@ -402,11 +402,10 @@ namespace SimplePotteryWheel
             Block block = Api.World.BlockAccessor.GetBlock(Pos);
             if (block.BlockId == 0) return null;
 
-            MeshData mesh;
             ITesselatorAPI mesher = ((ICoreClientAPI)Api).Tesselator;
 
             Shape meshShape = Shape.TryGet(Api, shapeAL);
-            mesher.TesselateShape(block, meshShape, out mesh);
+            mesher.TesselateShape(block, meshShape, out MeshData mesh);
 
             return mesh;
         }
@@ -611,7 +610,7 @@ namespace SimplePotteryWheel
 
                 if (recipe == null)
                 {
-                    Api.World.Logger.Error("Client tried to selected clayforming recipe with id {0}, but no such recipe exists!");
+                    Api.World.Logger.Error($"Client tried to selected clayforming recipe with id {recipeid}, but no such recipe exists!");
                     return;
                 }
 
@@ -626,30 +625,32 @@ namespace SimplePotteryWheel
 
             if (packetid == (int)EnumClayWheelPacket.AddClay)
             {
-                Vec3i[] voxels = new Vec3i[clayAddedPerUse];
-                using (MemoryStream ms = new MemoryStream(data))
+                //each vec3i should be 12 bytes each
+                if (data.Length <= 12 * clayAddedPerUse)
                 {
-                    //each vec3i should be 12 bytes each
-                    BinaryReader reader = new BinaryReader(ms);
-                    for (int i = 0; i < voxels.Length; i++)
+                    Vec3i[] voxels = new Vec3i[data.Length / 12];
+                    using (MemoryStream ms = new MemoryStream(data))
                     {
-                        try
+
+                        BinaryReader reader = new BinaryReader(ms);
+                        for (int i = 0; i < voxels.Length; i++)
                         {
                             voxels.SetValue(new Vec3i(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()), i);
                         }
-                        catch (Exception e)
-                        {
-                            Api.Logger.Error(e);
-                        }
                     }
+
+                    AddClay(voxels);
+                    //too spammy will look for a better solution later
+                    //Api.World.PlaySoundAt(clayFormSound, Pos.X, Pos.Y, Pos.Z, null, true, 8);
+                    CheckIfFinished(player);
+                    RegenWorkItemMesh();
                 }
-
-
-                AddClay(voxels);
-                //too spammy will look for a better solution later
-                //Api.World.PlaySoundAt(clayFormSound, Pos.X, Pos.Y, Pos.Z, null, true, 8);
-                CheckIfFinished(player);
-                RegenWorkItemMesh();
+                else //data length is too large
+                {
+                    Api.Logger.Warning($"Player with UID: {player.PlayerUID} might have a desynced config, resyncing...");
+                    //if we get here the player's config has somehow gotten desynced, so we resync it
+                    Api.ModLoader.GetModSystem<ClayWheelModSystem>().ResyncPlayerConfig((IServerPlayer)player);
+                }
 
                 ((ICoreServerAPI)Api).Network.SendBlockEntityPacket((IServerPlayer)player, Pos, (int)EnumClayWheelPacket.ClayAdded);
             }

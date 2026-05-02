@@ -49,6 +49,14 @@ public class ClayWheelModSystem : ModSystem
         (channel as IClientNetworkChannel).SetMessageHandler<ClayWheelModConfig>(OnConfigMessage);
     }
 
+    public void ResyncPlayerConfig(IServerPlayer player)
+    {
+        if (channel is IServerNetworkChannel schannel)
+        {
+            schannel.SendPacket(config, [player]);
+        }
+    }
+
 
     private void OnPlayerNowPlaying(IServerPlayer byPlayer)
     {
