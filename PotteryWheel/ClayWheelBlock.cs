@@ -20,7 +20,7 @@ namespace SimplePotteryWheel
 
             interactions = ObjectCacheUtil.GetOrCreate(api, "clayWheelInteractions", () =>
             {
-                List<ItemStack> clayStackList = new List<ItemStack>();
+                List<ItemStack> clayStackList = [];
 
                 foreach (CollectibleObject obj in api.World.Collectibles)
                 {
@@ -35,47 +35,45 @@ namespace SimplePotteryWheel
 
                 return new WorldInteraction[]
                 {
-                    new WorldInteraction()
+                    new()
                     {
                         ActionLangCode = "claywheel:blockhelp-claywheel-startclay",
                         HotKeyCode = "shift",
                         MouseButton = EnumMouseButton.Right,
-                        Itemstacks = clayStackList.ToArray(),
+                        Itemstacks = [.. clayStackList],
                         GetMatchingStacks = (wi, bs, es) =>
                         {
-                            ClayWheelEntity becw = api.World.BlockAccessor.GetBlockEntity(bs.Position) as ClayWheelEntity;
-                            if (becw != null && becw.SelectedRecipe != null)
+                            if (api.World.BlockAccessor.GetBlockEntity(bs.Position) is ClayWheelEntity becw && becw.SelectedRecipe != null)
                             {
                                 return null;
                             }
-                            else return clayStackList.ToArray();
+                            else return [.. clayStackList];
                         }
                     },
-                    new WorldInteraction()
+                    new()
                     {
                         ActionLangCode = "claywheel:blockhelp-claywheel-addclay",
                         HotKeyCode = null,
                         MouseButton = EnumMouseButton.Right,
-                        Itemstacks = clayStackList.ToArray(),
+                        Itemstacks = [.. clayStackList],
                         GetMatchingStacks = (wi, bs, es) =>
                         {
-                            ClayWheelEntity becw = api.World.BlockAccessor.GetBlockEntity(bs.Position) as ClayWheelEntity;
-                            List<ItemStack> stacks = new List<ItemStack>();
+                            List<ItemStack> stacks = [];
 
                             foreach (var val in wi.Itemstacks)
                             {
-                                if (becw != null)
+                                if (
+                                    api.World.BlockAccessor.GetBlockEntity(bs.Position) is ClayWheelEntity becw
+                                    && becw.WorkItemStack?.Collectible.LastCodePart() == val.Collectible.LastCodePart()
+                                )
                                 {
-                                    if (becw.WorkItemStack != null && becw.WorkItemStack.Collectible.LastCodePart() == val.Collectible.LastCodePart())
-                                    {
-                                        stacks.Add(val);
-                                    }
+                                    stacks.Add(val);
                                 }
                             }
-                            return stacks.ToArray();
+                            return [.. stacks];
                         }
                     },
-                    new WorldInteraction()
+                    new()
                     {
                         ActionLangCode = "claywheel:blockhelp-claywheel-retrieveclay",
                         HotKeyCode = "shift",
@@ -83,10 +81,9 @@ namespace SimplePotteryWheel
                         RequireFreeHand = true,
                         GetMatchingStacks = (wi, bs, es) =>
                         {
-                            ClayWheelEntity becw = api.World.BlockAccessor.GetBlockEntity(bs.Position) as ClayWheelEntity;
-                            if (becw != null && becw.SelectedRecipe != null)
+                            if (api.World.BlockAccessor.GetBlockEntity(bs.Position) is ClayWheelEntity becw && becw.SelectedRecipe != null)
                             {
-                                return new ItemStack[] { becw.WorkItemStack };
+                                return [becw.WorkItemStack];
                             }
                             else return null;
                         }
@@ -112,8 +109,7 @@ namespace SimplePotteryWheel
         //order of methods is: Start > Step(as long as being held) > Cancel > Stop
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-            var be = world.BlockAccessor.GetBlockEntity(blockSel.Position) as ClayWheelEntity;
-            if (be != null)
+            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be)
             {
                 ItemSlot slot = byPlayer.InventoryManager.ActiveHotbarSlot;
                 if (slot.Itemstack == null)
@@ -126,7 +122,7 @@ namespace SimplePotteryWheel
                     }
                     else return false;
                 }
-                string clayOnWheelType = be.WorkItemStack != null ? be.WorkItemStack.Collectible.Code.ToString() : null;
+                string clayOnWheelType = be.WorkItemStack?.Collectible.Code.ToString();
                 CollectibleObject heldItem = slot.Itemstack.Collectible;
                 if (byPlayer.Entity.Controls.ShiftKey && be.SelectedRecipe == null && heldItem.Code.FirstCodePart() == "clay")
                 {
@@ -147,12 +143,11 @@ namespace SimplePotteryWheel
 
         public override bool OnBlockInteractStep(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-            var be = world.BlockAccessor.GetBlockEntity(blockSel.Position) as ClayWheelEntity;
-            if (be != null)
+            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be)
             {
                 ItemSlot slot = byPlayer.InventoryManager.ActiveHotbarSlot;
                 if (slot.Itemstack == null) return false;
-                string clayOnWheelType = be.WorkItemStack != null ? be.WorkItemStack.Collectible.Code.ToString() : null;
+                string clayOnWheelType = be.WorkItemStack?.Collectible.Code.ToString();
                 CollectibleObject heldItem = slot.Itemstack.Collectible;
                 if (be.SelectedRecipe != null && heldItem.Code.ToString() == clayOnWheelType)
                 {
@@ -168,8 +163,7 @@ namespace SimplePotteryWheel
 
         public override bool OnBlockInteractCancel(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, EnumItemUseCancelReason cancelReason)
         {
-            var be = world.BlockAccessor.GetBlockEntity(blockSel.Position) as ClayWheelEntity;
-            if (be != null)
+            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be)
             {
                 be.Spin(false);
                 return true;
@@ -179,8 +173,7 @@ namespace SimplePotteryWheel
 
         public override void OnBlockInteractStop(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-            var be = world.BlockAccessor.GetBlockEntity(blockSel.Position) as ClayWheelEntity;
-            if (be != null)
+            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be)
             {
                 be.Spin(false);
             }

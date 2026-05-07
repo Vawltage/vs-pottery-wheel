@@ -21,7 +21,7 @@ namespace SimplePotteryWheel
         int selectedRecipeId = -1;
         bool automated = false;
         bool canAddClay = true;
-        float poweredMult
+        float PoweredMult
         {
             get
             {
@@ -35,14 +35,14 @@ namespace SimplePotteryWheel
                 }
             }
         }
-        int clayAddedPerUse
+        int ClayAddedPerUse
         {
-            get { return (int)(ClayWheelModSystem.config.voxelsPerUse * poweredMult); }
+            get { return (int)(ClayWheelModSystem.config.voxelsPerUse * PoweredMult); }
         }
         public int AvailableVoxels;
         public bool[,,] Voxels = new bool[16, 16, 16];
 
-        GuiDialog dlg;
+        GuiDialogBlockEntityRecipeSelector dlg;
         BEBehaviorMPConsumer mpc;
         ClayWheelRenderer renderer;
         public bool playerSpinning = false;
@@ -52,7 +52,7 @@ namespace SimplePotteryWheel
 
         public ClayFormingRecipe SelectedRecipe
         {
-            get { return Api != null ? Api.GetClayformingRecipes().FirstOrDefault(r => r.RecipeId == selectedRecipeId) : null; }
+            get { return Api?.GetClayformingRecipes().FirstOrDefault(r => r.RecipeId == selectedRecipeId); }
         }
 
         public ItemStack WorkItemStack
@@ -90,15 +90,14 @@ namespace SimplePotteryWheel
             }
 
             //when the block is reloaded resolve the current work item
-            if (workItemStack != null)
-            {
-                workItemStack.ResolveBlockOrItem(api.World);
-            }
+            workItemStack?.ResolveBlockOrItem(api.World);
 
             if (api.World.Side == EnumAppSide.Client)
             {
-                renderer = new ClayWheelRenderer(api as ICoreClientAPI, Pos, GenMesh("wheel"));
-                renderer.mechPowerPart = this.mpc;
+                renderer = new ClayWheelRenderer(api as ICoreClientAPI, Pos, GenMesh("wheel"))
+                {
+                    mechPowerPart = mpc
+                };
                 if (automated)
                 {
                     renderer.ShouldRender = true;
@@ -199,7 +198,7 @@ namespace SimplePotteryWheel
 
                 if (Api.Side == EnumAppSide.Client)
                 {
-                    SendAddClayPacket(byPlayer, GetPositionsToAdd());
+                    SendAddClayPacket(GetPositionsToAdd());
                     canAddClay = false;
                 }
 
@@ -237,7 +236,7 @@ namespace SimplePotteryWheel
         //we only add 1 voxel at a time when unpowered and 2 when powered
         private Vec3i[] GetPositionsToAdd()
         {
-            Vec3i[] positions = new Vec3i[clayAddedPerUse];
+            Vec3i[] positions = new Vec3i[ClayAddedPerUse];
             int count = 0;
             for (int y = 0; y < 16; y++)
             {
@@ -251,7 +250,7 @@ namespace SimplePotteryWheel
                             count++;
                         }
 
-                        if (count == clayAddedPerUse)
+                        if (count == ClayAddedPerUse)
                         {
                             return positions;
                         }
@@ -377,20 +376,14 @@ namespace SimplePotteryWheel
             AvailableVoxels = 0;
             selectedRecipeId = -1;
 
-            if (renderer != null)
-            {
-                renderer.AngleRad = 0f;
-            }
+            renderer?.AngleRad = 0f;
 
             MarkDirty();
         }
 
         void RegenWorkItemMesh()
         {
-            if (renderer != null)
-            {
-                renderer.RegenMesh(workItemStack, Voxels);
-            }
+            renderer?.RegenMesh(workItemStack, Voxels);
         }
 
         internal MeshData GenMesh(string type = "support")
@@ -469,10 +462,7 @@ namespace SimplePotteryWheel
                 spinSound.Dispose();
             }
 
-            if (renderer != null)
-            {
-                renderer.Dispose();
-            }
+            renderer?.Dispose();
             renderer = null;
         }
 
@@ -480,16 +470,13 @@ namespace SimplePotteryWheel
         {
             base.OnBlockUnloaded();
 
-            if (renderer != null)
-            {
-                renderer.Dispose();
-            }
+            renderer?.Dispose();
         }
 
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
         {
             base.FromTreeAttributes(tree, worldAccessForResolve);
-            bool modified = deserializeVoxels(tree.GetBytes("voxels"));
+            bool modified = DeserializeVoxels(tree.GetBytes("voxels"));
             workItemStack = tree.GetItemstack("workItemStack");
             AvailableVoxels = tree.GetInt("availableVoxels");
             selectedRecipeId = tree.GetInt("selectedRecipeId", -1);
@@ -508,13 +495,13 @@ namespace SimplePotteryWheel
         public override void ToTreeAttributes(ITreeAttribute tree)
         {
             base.ToTreeAttributes(tree);
-            tree.SetBytes("voxels", serializeVoxels());
+            tree.SetBytes("voxels", SerializeVoxels());
             tree.SetItemstack("workItemStack", workItemStack);
             tree.SetInt("availableVoxels", AvailableVoxels);
             tree.SetInt("selectedRecipeId", selectedRecipeId);
         }
 
-        byte[] serializeVoxels()
+        byte[] SerializeVoxels()
         {
             byte[] data = new byte[16 * 16 * 16 / 8];
             int pos = 0;
@@ -535,7 +522,7 @@ namespace SimplePotteryWheel
             return data;
         }
 
-        bool deserializeVoxels(byte[] data)
+        bool DeserializeVoxels(byte[] data)
         {
             if (data == null || data.Length < 16 * 16 * 16 / 8)
             {
@@ -543,7 +530,7 @@ namespace SimplePotteryWheel
                 return true;
             }
 
-            if (Voxels == null) Voxels = new bool[16, 16, 16];
+            Voxels ??= new bool[16, 16, 16];
 
 
             int pos = 0;
@@ -568,13 +555,13 @@ namespace SimplePotteryWheel
             return modified;
         }
 
-        public void SendAddClayPacket(IPlayer byPlayer, Vec3i[] voxels)
+        void SendAddClayPacket(Vec3i[] voxels)
         {
             byte[] data;
 
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new())
             {
-                BinaryWriter writer = new BinaryWriter(ms);
+                BinaryWriter writer = new(ms);
                 foreach (Vec3i voxel in voxels)
                 {
                     if (voxel != null)
@@ -628,13 +615,13 @@ namespace SimplePotteryWheel
             if (packetid == (int)EnumClayWheelPacket.AddClay)
             {
                 //each vec3i should be 12 bytes each
-                if (data.Length <= 12 * clayAddedPerUse)
+                if (data.Length <= 12 * ClayAddedPerUse)
                 {
                     Vec3i[] voxels = new Vec3i[data.Length / 12];
-                    using (MemoryStream ms = new MemoryStream(data))
+                    using (MemoryStream ms = new(data))
                     {
 
-                        BinaryReader reader = new BinaryReader(ms);
+                        BinaryReader reader = new(ms);
                         for (int i = 0; i < voxels.Length; i++)
                         {
                             voxels.SetValue(new Vec3i(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()), i);
@@ -675,21 +662,18 @@ namespace SimplePotteryWheel
                 ingredient = new ItemStack(world.GetItem(new AssetLocation("clay-" + ingredient.Collectible.LastCodePart())));
             }
 
-            List<ClayFormingRecipe> recipes = Api.GetClayformingRecipes()
+            List<ClayFormingRecipe> recipes = [.. Api.GetClayformingRecipes()
                 .Where(r => r.Ingredient.SatisfiesAsIngredient(ingredient))
-                .OrderBy(r => r.Output.ResolvedItemstack.Collectible.Code) // Cannot sort by name, thats language dependent!
-                .ToList();
+                .OrderBy(r => r.Output.ResolvedItemstack.Collectible.Code)];
             ;
-            List<ItemStack> stacks = recipes
-                .Select(r => r.Output.ResolvedItemstack)
-                .ToList()
+            List<ItemStack> stacks = [.. recipes.Select(r => r.Output.ResolvedItemstack)]
             ;
 
             ICoreClientAPI capi = Api as ICoreClientAPI;
 
             dlg = new GuiDialogBlockEntityRecipeSelector(
                 Lang.Get("Select recipe"),
-                stacks.ToArray(),
+                [.. stacks],
                 (selectedIndex) =>
                 {
                     capi.Logger.VerboseDebug("Select clay from recipe {0}, have {1} recipes.", selectedIndex, recipes.Count);
@@ -720,10 +704,7 @@ namespace SimplePotteryWheel
 
         public override void OnStoreCollectibleMappings(Dictionary<int, AssetLocation> blockIdMapping, Dictionary<int, AssetLocation> itemIdMapping)
         {
-            if (workItemStack != null)
-            {
-                workItemStack.Collectible.OnStoreCollectibleMappings(Api.World, new DummySlot(workItemStack), blockIdMapping, itemIdMapping);
-            }
+            workItemStack?.Collectible.OnStoreCollectibleMappings(Api.World, new DummySlot(workItemStack), blockIdMapping, itemIdMapping);
         }
 
         public override void OnLoadCollectibleMappings(IWorldAccessor worldForResolve, Dictionary<int, AssetLocation> oldBlockIdMapping, Dictionary<int, AssetLocation> oldItemIdMapping, int schematicSeed, bool resolveImports)

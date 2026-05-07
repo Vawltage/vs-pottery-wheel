@@ -2,7 +2,6 @@
 using Vintagestory.GameContent.Mechanics;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
-using Vintagestory.API.Util;
 using System;
 
 namespace SimplePotteryWheel
@@ -16,21 +15,21 @@ namespace SimplePotteryWheel
         public BEBehaviorMPConsumer mechPowerPart;
 
         private ICoreClientAPI api;
-        private BlockPos pos;
+        private readonly BlockPos pos;
         private const float spinSpeed = 120;
 
-        MeshRef baseMeshRef;
-        public Matrixf BaseModelMat = new Matrixf();
+        readonly MeshRef baseMeshRef;
+        public Matrixf BaseModelMat = new();
 
         int texId;
         MeshRef workItemMeshRef;
-        public Matrixf WorkItemModelMat = new Matrixf();
+        public Matrixf WorkItemModelMat = new();
 
         public float AngleRad;
 
         public ClayWheelRenderer(ICoreClientAPI coreClientAPI, BlockPos pos, MeshData mesh)
         {
-            this.api = coreClientAPI;
+            api = coreClientAPI;
             this.pos = pos;
             if (mesh != null) baseMeshRef = coreClientAPI.Render.UploadMesh(mesh);
         }
@@ -62,7 +61,6 @@ namespace SimplePotteryWheel
             rpi.GlToggleBlend(true);
 
             IStandardShaderProgram prog = rpi.PreparedStandardShader(pos.X, pos.Y, pos.Z);
-            //prog.Tex2D = api.BlockTextureAtlas.AtlasTextureIds[0];
             prog.Tex2D = api.BlockTextureAtlas.AtlasTextures[0].TextureId;
 
 
@@ -128,8 +126,7 @@ namespace SimplePotteryWheel
 
             if (workitem == null) return;
 
-            //this.workItem = workitem;
-            MeshData workItemMesh = new MeshData(24, 36, false);
+            MeshData workItemMesh = new(24, 36, false);
 
             float subPixelPaddingx = api.BlockTextureAtlas.SubPixelPaddingX;
             float subPixelPaddingy = api.BlockTextureAtlas.SubPixelPaddingY;
@@ -184,8 +181,8 @@ namespace SimplePotteryWheel
                             voxelMeshOffset.xyz[i + 2] = pz + singleVoxelMesh.xyz[i + 2];
                         }
 
-                        float offsetX = ((((x + 4 * y) % 16f / 16f)) * 32f) / api.BlockTextureAtlas.Size.Width;
-                        float offsetY = (pz * 32f) / api.BlockTextureAtlas.Size.Height;
+                        float offsetX = (x + 4 * y) % 16f / 16f * 32f / api.BlockTextureAtlas.Size.Width;
+                        float offsetY = pz * 32f / api.BlockTextureAtlas.Size.Height;
 
                         for (int i = 0; i < singleVoxelMesh.Uv.Length; i += 2)
                         {
@@ -206,8 +203,8 @@ namespace SimplePotteryWheel
         {
             api.Event.UnregisterRenderer(this, EnumRenderStage.Opaque);
 
-            if (baseMeshRef != null) baseMeshRef.Dispose();
-            if (workItemMeshRef != null) workItemMeshRef.Dispose();
+            baseMeshRef?.Dispose();
+            workItemMeshRef?.Dispose();
         }
     }
 }
