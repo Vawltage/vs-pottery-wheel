@@ -109,7 +109,7 @@ namespace SimplePotteryWheel
         //order of methods is: Start > Step(as long as being held) > Cancel > Stop
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be)
+            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be && blockSel.SelectionBoxIndex == 1)
             {
                 ItemSlot slot = byPlayer.InventoryManager.ActiveHotbarSlot;
                 if (slot.Itemstack == null)
@@ -143,7 +143,7 @@ namespace SimplePotteryWheel
 
         public override bool OnBlockInteractStep(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be)
+            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is ClayWheelEntity be && blockSel.SelectionBoxIndex == 1)
             {
                 ItemSlot slot = byPlayer.InventoryManager.ActiveHotbarSlot;
                 if (slot.Itemstack == null) return false;
@@ -181,7 +181,12 @@ namespace SimplePotteryWheel
 
         public override WorldInteraction[] GetPlacedBlockInteractionHelp(IWorldAccessor world, BlockSelection selection, IPlayer forPlayer)
         {
-            return interactions.Append(base.GetPlacedBlockInteractionHelp(world, selection, forPlayer));
+            if (selection.SelectionBoxIndex == 1)
+            {
+                return interactions.Append(base.GetPlacedBlockInteractionHelp(world, selection, forPlayer));
+            }
+
+            return base.GetPlacedBlockInteractionHelp(world, selection, forPlayer);
         }
 
         public override void DidConnectAt(IWorldAccessor world, BlockPos pos, BlockFacing face)
