@@ -4,6 +4,8 @@ using Vintagestory.GameContent.Mechanics;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using Vintagestory.API.Util;
+using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 
 namespace SimplePotteryWheel
 {
@@ -198,5 +200,41 @@ namespace SimplePotteryWheel
         {
             return face == BlockFacing.DOWN;
         }
+
+        public override void OnEntityCollide(IWorldAccessor world, Entity entity, BlockPos pos, BlockFacing facing, Vec3d collideSpeed, bool isImpact)
+        {
+            base.OnEntityCollide(world, entity, pos, facing, collideSpeed, isImpact);
+
+            if (facing == BlockFacing.UP && entity.Pos.Y > pos.Y + 0.75)
+            {
+                if (entity.World.Side == EnumAppSide.Server)
+                {
+                    float frameTime = GlobalConstants.PhysicsFrameTime;
+                    var mpc = GetBEBehavior<BEBehaviorMPConsumer>(pos);
+                    if (mpc != null)
+                    {
+                        entity.Pos.Yaw += frameTime * mpc.TrueSpeed * 2.5f * (mpc.IsRotationReversed() ? -1 : 1);
+                    }
+                }
+                else
+                {
+                    float frameTime = GlobalConstants.PhysicsFrameTime;
+                    var mpc = GetBEBehavior<BEBehaviorMPConsumer>(pos);
+                    var capi = api as ICoreClientAPI;
+                    if (capi.World.Player.Entity.EntityId == entity.EntityId)
+                    {
+                        var sign = mpc.IsRotationReversed() ? -1 : 1;
+                        if (capi.World.Player.CameraMode != EnumCameraMode.Overhead)
+                        {
+                            capi.Input.MouseYaw += frameTime * mpc.TrueSpeed * 2.5f * sign;
+                        }
+                        capi.World.Player.Entity.BodyYaw += frameTime * mpc.TrueSpeed * 2.5f * sign;
+                        capi.World.Player.Entity.WalkYaw += frameTime * mpc.TrueSpeed * 2.5f * sign;
+                        capi.World.Player.Entity.Pos.Yaw += frameTime * mpc.TrueSpeed * 2.5f * sign;
+                    }
+                }
+            }
+        }
+
     }
 }
