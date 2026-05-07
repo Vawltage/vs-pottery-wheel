@@ -32,7 +32,7 @@ namespace SimplePotteryWheel
         {
             this.api = coreClientAPI;
             this.pos = pos;
-            baseMeshRef = coreClientAPI.Render.UploadMesh(mesh);
+            if (mesh != null) baseMeshRef = coreClientAPI.Render.UploadMesh(mesh);
         }
 
         public double RenderOrder

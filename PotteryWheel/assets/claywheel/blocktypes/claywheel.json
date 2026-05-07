@@ -2,6 +2,11 @@
     "code": "claywheel",
     "class": "ClayWheel",
     "entityClass": "ClayWheelEntity",
+    "behaviors": [
+        {
+            "name": "NWOrientable"
+        }
+    ],
     "entityBehaviors": [
         {
             "name": "MPConsumer",
@@ -10,33 +15,79 @@
             }
         }
     ],
+    "variantgroups": [
+        {
+            "code": "orientation",
+            "states": [
+                "ns",
+                "we"
+            ]
+        }
+    ],
     "creativeinventory": {
         "general": [
-            "*"
+            "*-ns"
         ],
         "mechanics": [
-            "*"
+            "*-ns"
         ]
     },
     "drawtype": "json",
-    "shape": {
-        "base": "block/claywheel"
+    "shapeinventory": {
+        "base": "block/claywheel-complete"
     },
-    "selectionBox": {
-        "x1": 0.125,
-        "y1": 0,
-        "z1": 0.125,
-        "x2": 0.875,
-        "y2": 1,
-        "z2": 0.875
+    "shapebytype": {
+        "*-ns": {
+            "base": "block/claywheel-complete",
+            "rotateY": 0
+        },
+        "*-we": {
+            "base": "block/claywheel-complete",
+            "rotateY": 90
+        }
     },
-    "collisionBox": {
-        "x1": 0.125,
-        "y1": 0,
-        "z1": 0.125,
-        "x2": 0.875,
-        "y2": 1,
-        "z2": 0.875
+    "heldTpIdleAnimation": "holdbothhandslarge",
+    "heldRightReadyAnimation": "heldblockready",
+    "heldTpUseAnimation": "twohandplaceblock",
+    "collisionSelectionBoxesByType": {
+        "*-ns": [
+            {
+                "x1": 0,
+                "y1": 0,
+                "z1": 0.1875,
+                "x2": 1,
+                "y2": 0.75,
+                "z2": 0.8125
+            },
+            {
+                "x1": 0.125,
+                "y1": 0.75,
+                "z1": 0.1875,
+                "x2": 0.875,
+                "y2": 1,
+                "z2": 0.8125
+            }
+        ],
+        "*-we": [
+            {
+                "x1": 0,
+                "y1": 0,
+                "z1": 0.1875,
+                "x2": 1,
+                "y2": 0.75,
+                "z2": 0.8125,
+                "rotateY": 90
+            },
+            {
+                "x1": 0.125,
+                "y1": 0.75,
+                "z1": 0.1875,
+                "x2": 0.875,
+                "y2": 1,
+                "z2": 0.8125,
+                "rotateY": 90
+            }
+        ]
     },
     "sidesolid": {
         "all": false
@@ -45,6 +96,21 @@
         "all": false
     },
     "resistance": 1,
+    "tpHandTransform": {
+        "translation": {
+            "x": -2.3,
+            "y": -1.7,
+            "z": -1.1
+        },
+        "rotation": {
+            "x": -90,
+            "y": 0,
+            "z": -90
+        }
+    },
+    "groundTransform": {
+        "scale": 2
+    },
     "sounds": {
         "place": "game:block/ceramicplace",
         "break": "game:block/rock-break-pickaxe",

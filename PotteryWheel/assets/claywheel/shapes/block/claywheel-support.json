@@ -1,0 +1,898 @@
+{
+    "editor": {
+        "collapsedPaths": "Root/PlateOrigin,Root/Rotator/Base,Root/FlywheelOrigin,Root/Rotator/PlateOrigin",
+        "allAngles": true,
+        "entityTextureMode": false
+    },
+    "textureWidth": 16,
+    "textureHeight": 16,
+    "textureSizes": {},
+    "textures": {
+        "oak1": "game:block/wood/planks/oak1"
+    },
+    "elements": [
+        {
+            "name": "SupportOrigin",
+            "from": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "to": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "faces": {
+                "north": {
+                    "texture": "#null",
+                    "uv": [
+                        0.0,
+                        0.0,
+                        0.5,
+                        0.5
+                    ],
+                    "enabled": false
+                },
+                "east": {
+                    "texture": "#null",
+                    "uv": [
+                        0.0,
+                        0.0,
+                        0.5,
+                        0.5
+                    ],
+                    "enabled": false
+                },
+                "south": {
+                    "texture": "#null",
+                    "uv": [
+                        0.0,
+                        0.0,
+                        0.5,
+                        0.5
+                    ],
+                    "enabled": false
+                },
+                "west": {
+                    "texture": "#null",
+                    "uv": [
+                        0.0,
+                        0.0,
+                        0.5,
+                        0.5
+                    ],
+                    "enabled": false
+                },
+                "up": {
+                    "texture": "#null",
+                    "uv": [
+                        0.0,
+                        0.0,
+                        0.5,
+                        0.5
+                    ],
+                    "enabled": false
+                },
+                "down": {
+                    "texture": "#null",
+                    "uv": [
+                        0.0,
+                        0.0,
+                        0.5,
+                        0.5
+                    ],
+                    "enabled": false
+                }
+            },
+            "children": [
+                {
+                    "name": "SupportLeg1",
+                    "from": [
+                        0.0,
+                        0.0,
+                        3.0
+                    ],
+                    "to": [
+                        1.0,
+                        11.0,
+                        5.0
+                    ],
+                    "faces": {
+                        "north": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                1.0,
+                                10.0,
+                                3.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "east": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                3.0,
+                                10.0,
+                                5.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "south": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                7.0,
+                                10.0,
+                                9.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "west": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                9.0,
+                                10.0,
+                                11.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "up": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                2.0,
+                                2.0
+                            ],
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "down": {
+                            "texture": "#oak1",
+                            "uv": [
+                                14.0,
+                                1.0,
+                                16.0,
+                                3.0
+                            ],
+                            "autoUv": false
+                        }
+                    }
+                },
+                {
+                    "name": "SupportLeg2",
+                    "from": [
+                        15.0,
+                        0.0,
+                        3.0
+                    ],
+                    "to": [
+                        16.0,
+                        11.0,
+                        5.0
+                    ],
+                    "faces": {
+                        "north": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                1.0,
+                                10.0,
+                                3.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "east": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                3.0,
+                                10.0,
+                                5.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "south": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                7.0,
+                                10.0,
+                                9.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "west": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                9.0,
+                                10.0,
+                                11.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "up": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                2.0,
+                                2.0
+                            ],
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "down": {
+                            "texture": "#oak1",
+                            "uv": [
+                                14.0,
+                                1.0,
+                                16.0,
+                                3.0
+                            ],
+                            "autoUv": false
+                        }
+                    }
+                },
+                {
+                    "name": "SupportLeg3",
+                    "from": [
+                        15.0,
+                        0.0,
+                        11.0
+                    ],
+                    "to": [
+                        16.0,
+                        11.0,
+                        13.0
+                    ],
+                    "faces": {
+                        "north": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                1.0,
+                                10.0,
+                                3.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "east": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                3.0,
+                                10.0,
+                                5.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "south": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                7.0,
+                                10.0,
+                                9.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "west": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                9.0,
+                                10.0,
+                                11.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "up": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                2.0,
+                                2.0
+                            ],
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "down": {
+                            "texture": "#oak1",
+                            "uv": [
+                                14.0,
+                                1.0,
+                                16.0,
+                                3.0
+                            ],
+                            "autoUv": false
+                        }
+                    }
+                },
+                {
+                    "name": "SupportLeg4",
+                    "from": [
+                        0.0,
+                        0.0,
+                        11.0
+                    ],
+                    "to": [
+                        1.0,
+                        11.0,
+                        13.0
+                    ],
+                    "faces": {
+                        "north": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                1.0,
+                                10.0,
+                                3.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "east": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                3.0,
+                                10.0,
+                                5.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "south": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                7.0,
+                                10.0,
+                                9.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "west": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                9.0,
+                                10.0,
+                                11.0
+                            ],
+                            "rotation": 90,
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "up": {
+                            "texture": "#oak1",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                2.0,
+                                2.0
+                            ],
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ]
+                        },
+                        "down": {
+                            "texture": "#oak1",
+                            "uv": [
+                                14.0,
+                                1.0,
+                                16.0,
+                                3.0
+                            ],
+                            "autoUv": false
+                        }
+                    }
+                },
+                {
+                    "name": "SupportTopOrigin",
+                    "from": [
+                        0.0,
+                        11.0,
+                        0.0
+                    ],
+                    "to": [
+                        0.0,
+                        11.0,
+                        0.0
+                    ],
+                    "rotationOrigin": [
+                        0.0,
+                        11.0,
+                        0.0
+                    ],
+                    "faces": {
+                        "north": {
+                            "texture": "#null",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "autoUv": false,
+                            "windMode": [
+                                -1,
+                                -1,
+                                -1,
+                                -1
+                            ],
+                            "enabled": false
+                        },
+                        "east": {
+                            "texture": "#null",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "autoUv": false,
+                            "enabled": false
+                        },
+                        "south": {
+                            "texture": "#null",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "autoUv": false,
+                            "enabled": false
+                        },
+                        "west": {
+                            "texture": "#null",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "autoUv": false,
+                            "enabled": false
+                        },
+                        "up": {
+                            "texture": "#null",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "autoUv": false,
+                            "enabled": false
+                        },
+                        "down": {
+                            "texture": "#null",
+                            "uv": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "autoUv": false,
+                            "enabled": false
+                        }
+                    },
+                    "children": [
+                        {
+                            "name": "SupportTopNorth",
+                            "from": [
+                                0.0,
+                                0.0,
+                                3.0
+                            ],
+                            "to": [
+                                16.0,
+                                1.0,
+                                6.0
+                            ],
+                            "faces": {
+                                "north": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        1.0
+                                    ]
+                                },
+                                "east": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        3.0,
+                                        1.0
+                                    ]
+                                },
+                                "south": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        1.0
+                                    ]
+                                },
+                                "west": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        3.0,
+                                        1.0
+                                    ]
+                                },
+                                "up": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        3.0
+                                    ]
+                                },
+                                "down": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        3.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "SupportTopSouth",
+                            "from": [
+                                0.0,
+                                0.0,
+                                10.0
+                            ],
+                            "to": [
+                                16.0,
+                                1.0,
+                                13.0
+                            ],
+                            "faces": {
+                                "north": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        1.0
+                                    ]
+                                },
+                                "east": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        3.0,
+                                        1.0
+                                    ]
+                                },
+                                "south": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        1.0
+                                    ]
+                                },
+                                "west": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        3.0,
+                                        1.0
+                                    ]
+                                },
+                                "up": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        3.0
+                                    ]
+                                },
+                                "down": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        16.0,
+                                        3.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "SupportTopEast",
+                            "from": [
+                                10.0,
+                                0.0,
+                                6.0
+                            ],
+                            "to": [
+                                16.0,
+                                1.0,
+                                10.0
+                            ],
+                            "faces": {
+                                "north": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        1.0
+                                    ]
+                                },
+                                "east": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        4.0,
+                                        1.0
+                                    ]
+                                },
+                                "south": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        1.0
+                                    ]
+                                },
+                                "west": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        4.0,
+                                        1.0
+                                    ]
+                                },
+                                "up": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        4.0
+                                    ]
+                                },
+                                "down": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        4.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "SupportTopWest",
+                            "from": [
+                                0.0,
+                                0.0,
+                                6.0
+                            ],
+                            "to": [
+                                6.0,
+                                1.0,
+                                10.0
+                            ],
+                            "faces": {
+                                "north": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        1.0
+                                    ]
+                                },
+                                "east": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        4.0,
+                                        1.0
+                                    ]
+                                },
+                                "south": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        1.0
+                                    ]
+                                },
+                                "west": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        4.0,
+                                        1.0
+                                    ]
+                                },
+                                "up": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        4.0
+                                    ]
+                                },
+                                "down": {
+                                    "texture": "#oak1",
+                                    "uv": [
+                                        0.0,
+                                        0.0,
+                                        6.0,
+                                        4.0
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

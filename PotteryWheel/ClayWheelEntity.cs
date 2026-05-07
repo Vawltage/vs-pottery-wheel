@@ -47,8 +47,7 @@ namespace SimplePotteryWheel
         ClayWheelRenderer renderer;
         public bool playerSpinning = false;
 
-        private AssetLocation shapeAL = AssetLocation.Create("shapes/block/claywheel.json", "claywheel");
-        private AssetLocation clayFormSound = AssetLocation.Create("sounds/player/clayform.ogg");
+        private readonly AssetLocation clayFormSound = new("game:sounds/player/clayform.ogg");
         ILoadedSound spinSound;
 
         public ClayFormingRecipe SelectedRecipe
@@ -61,15 +60,15 @@ namespace SimplePotteryWheel
             get { return workItemStack; }
         }
 
-        MeshData baseMesh
+        MeshData SupportMesh;
+        protected MeshData WheelMesh
         {
             get
             {
-                object value;
-                Api.ObjectCache.TryGetValue("claywheelmesh", out value);
+                Api.ObjectCache.TryGetValue("claywheelwheelmesh", out object value);
                 return (MeshData)value;
             }
-            set { Api.ObjectCache["claywheelmesh"] = value; }
+            set { Api.ObjectCache["claywheelwheelmesh"] = value; }
         }
 
         public override void Initialize(ICoreAPI api)
@@ -98,7 +97,7 @@ namespace SimplePotteryWheel
 
             if (api.World.Side == EnumAppSide.Client)
             {
-                renderer = new ClayWheelRenderer(api as ICoreClientAPI, Pos, GenMesh());
+                renderer = new ClayWheelRenderer(api as ICoreClientAPI, Pos, GenMesh("wheel"));
                 renderer.mechPowerPart = this.mpc;
                 if (automated)
                 {
@@ -108,10 +107,8 @@ namespace SimplePotteryWheel
 
                 (api as ICoreClientAPI).Event.RegisterRenderer(renderer, EnumRenderStage.Opaque, "claywheel");
 
-                if (baseMesh == null)
-                {
-                    baseMesh = GenMesh();
-                }
+                SupportMesh = GenMesh("support");
+                WheelMesh ??= GenMesh("wheel");
 
                 RegenWorkItemMesh();
             }
@@ -396,16 +393,20 @@ namespace SimplePotteryWheel
             }
         }
 
-        //this is for the base mesh ie the clay wheel itself
-        internal MeshData GenMesh()
+        internal MeshData GenMesh(string type = "support")
         {
             Block block = Api.World.BlockAccessor.GetBlock(Pos);
             if (block.BlockId == 0) return null;
 
             ITesselatorAPI mesher = ((ICoreClientAPI)Api).Tesselator;
 
-            Shape meshShape = Shape.TryGet(Api, shapeAL);
+            Shape meshShape = Shape.TryGet(Api, new AssetLocation($"claywheel:shapes/block/claywheel-{type}.json"));
             mesher.TesselateShape(block, meshShape, out MeshData mesh);
+            if (type == "support" && block.LastCodePart() == "we")
+            {
+                // rotate support mesh to match block orientation
+                mesh = mesh.Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0, (float)(Math.PI / 2), 0);
+            }
 
             return mesh;
         }
@@ -436,10 +437,11 @@ namespace SimplePotteryWheel
         {
             if (Block == null) return false;
 
-            if (!playerSpinning && !automated)
+            mesher.AddMeshData(SupportMesh);
+            if (!playerSpinning && !automated && renderer != null)
             {
                 mesher.AddMeshData(
-                    this.baseMesh.Clone()
+                    WheelMesh.Clone()
                     .Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0, renderer.AngleRad, 0)
                 );
             }
