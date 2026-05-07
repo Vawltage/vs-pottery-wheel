@@ -686,8 +686,15 @@ namespace SimplePotteryWheel
                     capi.Network.SendBlockEntityPacket(pos, (int)EnumClayWheelPacket.CancelSelect);
                 },
                 pos,
-                Api as ICoreClientAPI
+                capi
             );
+
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                ItemStack[] ingredCount = [ingredient.GetEmptyClone()];
+                ingredCount[0].StackSize = (int)Math.Ceiling(GameMath.Max(1, (recipes[i].Voxels.Cast<bool>().Count(voxel => voxel) - 89) / 25f));
+                dlg.SetIngredientCounts(i, ingredCount);
+            }
 
             dlg.OnClosed += dlg.Dispose;
             dlg.TryOpen();
