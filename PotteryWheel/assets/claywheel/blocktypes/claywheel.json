@@ -15,6 +15,14 @@
             }
         }
     ],
+    "attributes": {
+        "mapColorCode": "settlement",
+        "handbook": {
+            "groupBy": [
+                "claywheel-*"
+            ]
+        }
+    },
     "variantgroups": [
         {
             "code": "orientation",
@@ -89,10 +97,7 @@
             }
         ]
     },
-    "sidesolid": {
-        "all": false
-    },
-    "sideopaque": {
+    "sideSolidOpaqueAo": {
         "all": false
     },
     "resistance": 1,
