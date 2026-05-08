@@ -17,6 +17,7 @@ namespace SimplePotteryWheel
         private ICoreClientAPI api;
         private readonly BlockPos pos;
         private const float spinSpeed = 120;
+        private float workItemScale = 0.75f;
 
         readonly MeshRef baseMeshRef;
         public Matrixf BaseModelMat = new();
@@ -100,12 +101,14 @@ namespace SimplePotteryWheel
             IStandardShaderProgram prog = rpi.PreparedStandardShader(pos.X, pos.Y, pos.Z);
             rpi.BindTexture2d(texId);
 
+            float scaledOffset = (1 - workItemScale) / 2;
             prog.ModelMatrix = WorkItemModelMat
                 .Identity()
                 .Translate(pos.X - camPos.X, pos.Y - camPos.Y, pos.Z - camPos.Z)
                 .Translate(0.5f, 1f, 0.5f)
                 .RotateY(AngleRad)
-                .Translate(-0.5f, 0, -0.5f)
+                .Translate(-0.5f + scaledOffset, 0, -0.5f + scaledOffset)
+                .Scale(workItemScale, workItemScale, workItemScale)
                 .Values;
 
             prog.ViewMatrix = rpi.CameraMatrixOriginf;
