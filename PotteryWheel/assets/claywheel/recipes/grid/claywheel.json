@@ -1,11 +1,11 @@
 {
-    "ingredientPattern": "HS,CL,_B",
+    "ingredientPattern": "_S,HP,CB",
     "ingredients": {
         "H": {
             "type": "item",
             "code": "game:hammer-*",
             "isTool": true,
-            "toolDurabilityCost": 30
+            "toolDurabilityCost": 15
         },
         "S": {
             "type": "block",
@@ -15,11 +15,12 @@
             "type": "item",
             "code": "game:chisel-*",
             "isTool": true,
-            "toolDurabilityCost": 40
+            "toolDurabilityCost": 20
         },
-        "L": {
-            "type": "block",
-            "code": "game:log-*"
+        "P": {
+            "type": "item",
+            "code": "game:plank-*",
+            "quantity": 2
         },
         "B": {
             "type": "block",
