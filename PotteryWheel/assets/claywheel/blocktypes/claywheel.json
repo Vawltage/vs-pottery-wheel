@@ -23,6 +23,8 @@
             ]
         }
     },
+    "renderAlphaTest": 0.9,
+    "renderPass": "opaquenocull",
     "variantgroups": [
         {
             "code": "orientation",
@@ -101,6 +103,7 @@
         "all": false
     },
     "resistance": 1,
+    "lightAbsorption": 0,
     "tpHandTransform": {
         "translation": {
             "x": -2.3,
