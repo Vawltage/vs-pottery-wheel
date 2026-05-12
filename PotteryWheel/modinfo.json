@@ -6,7 +6,7 @@
         "Voltage"
     ],
     "description": "Adds a pottery wheel for easier clay forming.",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "dependencies": {
         "game": "1.22.2"
     }
