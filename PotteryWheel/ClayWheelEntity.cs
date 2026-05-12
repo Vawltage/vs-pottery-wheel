@@ -60,7 +60,15 @@ namespace SimplePotteryWheel
             get { return workItemStack; }
         }
 
-        MeshData SupportMesh;
+        protected MeshData SupportMesh
+        {
+            get
+            {
+                Api.ObjectCache.TryGetValue($"claywheelsupportmesh-{Block?.LastCodePart()}", out object value);
+                return (MeshData)value;
+            }
+            set { Api.ObjectCache[$"claywheelsupportmesh-{Block?.LastCodePart()}"] = value; }
+        }
         protected MeshData WheelMesh
         {
             get
@@ -106,7 +114,7 @@ namespace SimplePotteryWheel
 
                 (api as ICoreClientAPI).Event.RegisterRenderer(renderer, EnumRenderStage.Opaque, "claywheel");
 
-                SupportMesh = GenMesh("support");
+                SupportMesh ??= GenMesh("support");
                 WheelMesh ??= GenMesh("wheel");
 
                 RegenWorkItemMesh();
@@ -386,10 +394,10 @@ namespace SimplePotteryWheel
             renderer?.RegenMesh(workItemStack, Voxels);
         }
 
-        internal MeshData GenMesh(string type = "support")
+        internal MeshData GenMesh(string type)
         {
             Block block = Api.World.BlockAccessor.GetBlock(Pos);
-            if (block.BlockId == 0) return null;
+            if (block.Code != "claywheel:claywheel-ns" && block.Code != "claywheel:claywheel-we") return null;
 
             ITesselatorAPI mesher = ((ICoreClientAPI)Api).Tesselator;
 
